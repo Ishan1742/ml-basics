@@ -97,6 +97,15 @@ plt.clf()
 print("Decision Tree saved: 'iris-results/decisiontree.png'")
 print()
 
+# prediction
+print("Prediction vs Actual: ")
+print("    Prediction:         Actual:")
+i = 0
+for obj in y_test:
+    print("    {0:15}     {1}".format(prediction[i], obj))
+    i += 1
+print()
+
 # confusion matrix
 disp = metrics.plot_confusion_matrix(
     decision_tree, X_test, y_test, display_labels=cn, cmap=plt.cm.Blues, normalize=None)
@@ -107,17 +116,18 @@ print("Confusion Matrix saved: 'iris-results/confusion.png'")
 print()
 
 # prediction plot
-plot_colors = "cyb"
+plot_colors = "rgb"
 n_class = 3
 for i, color in zip(cn, plot_colors):
     temp = np.where(y_test == i)
     idx = [elem for elems in temp for elem in elems]
     plt.scatter(X_test.iloc[idx, 2], X_test.iloc[idx, 3], c=color,
-                label=y_test, cmap=plt.cm.RdYlBu, edgecolor='black', s=20)
+                label=i, cmap=plt.cm.RdYlBu, edgecolor='black', s=20)
 
 plt.suptitle("Decision Boundary Shown in 2D with Test Data")
 plt.xlabel('petal_length')
 plt.ylabel('petal_width')
+plt.legend()
 plt.axis("tight")
 plt.savefig('iris-results/prediction.png')
 plt.clf()
