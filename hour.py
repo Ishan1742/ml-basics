@@ -111,6 +111,8 @@ print()
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.3, random_state=43)
+print(X_train.shape)
+print(X_test.shape)
 print(X_train.head())
 print()
 print("Fitting data. Please wait...")
@@ -155,4 +157,15 @@ plt.title('Actual Count vs Predicted Count')
 plt.savefig('hour-results/prediction.png')
 plt.clf()
 print(f"Actual vs Prediction Results saved: 'hour-results/prediction.png'")
+print()
+
+with open('hour-results/output.txt', 'w') as file:
+    file.write("Predictions vs Actual: \n\n")
+    file.write("    Prediction:         Actual:\n")
+    i = 0
+    for obj in y_test:
+        file.write("    {0:15}     {1}\n".format(y_pred[i], obj))
+        i += 1
+    file.write("\n")
+print("Text format for prediction saved: 'hour-results/output.txt")
 print()

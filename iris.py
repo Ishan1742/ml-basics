@@ -97,14 +97,14 @@ plt.clf()
 print("Decision Tree saved: 'iris-results/decisiontree.png'")
 print()
 
-# prediction
-print("Prediction vs Actual: ")
-print("    Prediction:         Actual:")
-i = 0
-for obj in y_test:
-    print("    {0:15}     {1}".format(prediction[i], obj))
-    i += 1
-print()
+with open('iris-results/output.txt', 'w') as file:
+    file.write("Predictions vs Actual: \n\n")
+    file.write("    Prediction:         Actual:\n")
+    i = 0
+    for obj in y_test:
+        file.write("    {0:15}     {1}\n".format(prediction[i], obj))
+        i += 1
+    file.write("\n")
 
 # confusion matrix
 disp = metrics.plot_confusion_matrix(
@@ -132,4 +132,6 @@ plt.axis("tight")
 plt.savefig('iris-results/prediction.png')
 plt.clf()
 print("Prediction saved: 'iris-results/prediction.png'")
+print()
+print("Text format for prediction saved: 'iris-results/output.txt")
 print()
