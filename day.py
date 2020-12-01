@@ -9,7 +9,7 @@ from scipy import stats
 from sklearn import metrics
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.model_selection import cross_val_score, cross_val_predict, train_test_split
+from sklearn.model_selection import cross_val_score, cross_val_predict, train_test_split, GridSearchCV
 
 bike_df = pd.read_csv('data/day.csv')
 print(f"Shape of the dataset: {bike_df.shape}")
@@ -166,6 +166,18 @@ print()
 X_train = train_encoded_attributes
 y_train = y_train.cnt.values
 
+# print("Performing GridSearch...")
+# print()
+# regressor = RandomForestRegressor()
+# parameters = [{'n_estimators': [150, 200, 250, 300],
+#                'max_features': ['auto', 'sqrt', 'log2']}]
+# grid_search = GridSearchCV(
+#     estimator=regressor, param_grid=parameters, n_jobs=-1)
+# grid_search = grid_search.fit(X_train, y_train)
+# best_parameters = grid_search.best_params_
+# print(best_parameters)
+# print()
+
 test_encoded_attributes = pd.get_dummies(
     test_attributes, columns=cat_attributes)
 print('Shape test data: ', test_encoded_attributes.shape)
@@ -176,14 +188,10 @@ print()
 X_test = test_encoded_attributes
 y_test = y_test.cnt.values
 
-regressor = RandomForestRegressor(n_estimators=200)
+regressor = RandomForestRegressor(n_estimators=150)
 regressor.fit(X_train, y_train)
-r_score = regressor.score(X_train, y_train)
+r_score = regressor.score(X_test, y_test)
 print("Accuracy of the model: ", r_score)
-print()
-
-r2_scores = cross_val_score(regressor, X_train, y_train, cv=3)
-print('R-squared scores :', np.average(r2_scores))
 print()
 
 y_pred = regressor.predict(X_test)

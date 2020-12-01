@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 
 # print data
 bike_df = pd.read_csv('data/hour.csv')
@@ -115,13 +115,24 @@ print(X_train.shape)
 print(X_test.shape)
 print(X_train.head())
 print()
+
+# print("Performing GridSearch...")
+# print()
+# regressor = RandomForestRegressor()
+# parameters = [{'n_estimators': [150, 200, 250, 300],
+#                'max_features': ['auto', 'sqrt', 'log2']}]
+# grid_search = GridSearchCV(
+#     estimator=regressor, param_grid=parameters, n_jobs=-1)
+# grid_search = grid_search.fit(X_train, y_train)
+# best_parameters = grid_search.best_params_
+# print(best_parameters)
+# print()
+
 print("Fitting data. Please wait...")
 print()
-
-# modelling
-regressor = RandomForestRegressor(n_estimators=250, max_features='auto')
+regressor = RandomForestRegressor(n_estimators=200, max_features='auto')
 regressor.fit(X_train, y_train)
-r_score = regressor.score(X_train, y_train)
+r_score = regressor.score(X_test, y_test)
 print(f"Accuracy of the model: {r_score}")
 print()
 
